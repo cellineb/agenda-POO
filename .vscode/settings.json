@@ -1,0 +1,8 @@
+{
+    "java.project.sourcePaths": [
+        "src"
+    ],
+    "java.project.referencedLibraries": [
+        "C:\\Users\\celli\\agenda-POO\\trabalhoPOO\\lib\\mariadb-java-client-3.5.1.jar"
+    ]
+}
