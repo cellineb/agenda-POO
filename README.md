@@ -1,1 +1,2 @@
 # agenda-POO
+Trabalho desenvolvido para a matéria de Programação Orientada a Obejtos na Fatec Zona Leste. O projeto consiste em uma agenda voltada para estudantes, que permite cadastrar, editar, excluir e buscar disciplinas e tarefas. Desenvolvida em Java.
