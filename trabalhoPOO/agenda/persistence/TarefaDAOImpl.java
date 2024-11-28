@@ -1,6 +1,6 @@
 package trabalhoPOO.agenda.persistence;
 
-import trabalhoPOO.agenda.model.Disciplina;
+import trabalhoPOO.agenda.model.Tarefa;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DisciplinaDAOImpl implements IDisciplinaDAO {
+public class TarefaDAOImpl implements ITarefaDAO {
 
     private final static String DB_CLASS = "org.mariadb.jdbc.Driver";
     private final static String DB_URL = "jdbc:mariadb://localhost:3306/agenda";
@@ -19,7 +19,7 @@ public class DisciplinaDAOImpl implements IDisciplinaDAO {
 
     private Connection con = null;
 
-    public DisciplinaDAOImpl() throws AgendaException {
+    public TarefaDAOImpl() throws AgendaException {
         try {
             Class.forName(DB_CLASS);
             con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
@@ -29,16 +29,19 @@ public class DisciplinaDAOImpl implements IDisciplinaDAO {
     }
 
     @Override
-    public void inserir(Disciplina d) throws AgendaException {
+    public void inserir(Tarefa t) throws AgendaException {
         try {
             String sql = """
-                    INSERT INTO disciplina (id, nome, professor)
-                    VALUES (?, ?, ?)
+                    INSERT INTO tarefa (id, nome, data, hora, tipoTarefa, disciplina)
+                    VALUES (?, ?, ?, ?, ?, ?)
                     """;
             PreparedStatement stm = con.prepareStatement(sql);
-            stm.setInt(1, d.getId());
-            stm.setString(2, d.getNome());
-            stm.setString(3, d.getProfessor());
+            stm.setInt(1, t.getId());
+            stm.setString(2, t.getNome());
+            stm.setString(3, t.getData());
+            stm.setString(4, t.getHora());
+            stm.setString(5, t.getTipoTarefa());
+            stm.setInt(6, t.getDisciplina());
             stm.executeUpdate();
         } catch (SQLException err) {
             throw new AgendaException(err);
@@ -46,16 +49,19 @@ public class DisciplinaDAOImpl implements IDisciplinaDAO {
     }
 
     @Override
-    public void atualizar(Disciplina d) throws AgendaException {
+    public void atualizar(Tarefa t) throws AgendaException {
         try {
             String sql = """
-                    UPDATE disciplina SET id=?, nome=?, professor=?
+                    UPDATE tarefa SET id=?, nome=?, data=?, hora=?, tipoTarefa=?, disciplina=?)
                     WHERE id = ?
                     """;
             PreparedStatement stm = con.prepareStatement(sql);
-            stm.setInt(1, d.getId());
-            stm.setString(2, d.getNome());
-            stm.setString(3, d.getProfessor());
+            stm.setInt(1, t.getId());
+            stm.setString(2, t.getNome());
+            stm.setString(3, t.getData());
+            stm.setString(4, t.getHora());
+            stm.setString(5, t.getTipoTarefa());
+            stm.setInt(6, t.getDisciplina());
             stm.executeUpdate();
         } catch (SQLException err) {
             throw new AgendaException(err);
@@ -63,10 +69,10 @@ public class DisciplinaDAOImpl implements IDisciplinaDAO {
     }
 
     @Override
-    public void remover(Disciplina d) throws AgendaException {
+    public void remover(Tarefa t) throws AgendaException {
         try {
             String sql = """
-                    DELETE FROM disciplina
+                    DELETE FROM tarefa
                     WHERE id = ?
                     """;
             PreparedStatement stm = con.prepareStatement(sql);
@@ -78,21 +84,24 @@ public class DisciplinaDAOImpl implements IDisciplinaDAO {
     }
 
     @Override
-    public List<Disciplina> pesquisarPorLogradouro(String nome) throws AgendaException {
-        List<Disciplina> lista = new ArrayList<>();
+    public List<Tarefa> pesquisarPorLogradouro(String nome) throws AgendaException {
+        List<Tarefa> lista = new ArrayList<>();
         try {
             String sql = """
-                    SELECT FROM disciplina
+                    SELECT FROM tarefa
                     WHERE nome LIKE ?
                     """;
             PreparedStatement stm = con.prepareStatement(sql);
             stm.setString(1, "%" + nome + "%");
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                Disciplina disciplina = new Disciplina();
-                disciplina.setId(rs.getInt("id"));
-                disciplina.setString(rs.getString("nome"));
-                disciplina.setString(rs.getString("professor"));
+                Tarefa tarefa = new Tarefa();
+                tarefa.setId(rs.getInt("id"));
+                tarefa.setNome(rs.getString("nome"));
+                tarefa.setData(rs.getString("data"));
+                tarefa.setHora(rs.getString("hora"));
+                tarefa.setTipoTarefa(rs.getString("tipoTarefa"));
+                tarefa.setDisciplina(rs.getInt("idDisciplina"))
                 lista.add(disciplina);
             }
         } catch (SQLException err) {

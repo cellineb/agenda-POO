@@ -6,7 +6,7 @@ public class Tarefa {
     private String data;
     private String hora;
     private String tipoTarefa;
-    private Disciplina disciplina;
+    private String disciplina;
 
     public Tarefas() {
         this.id = id;
@@ -61,7 +61,7 @@ public class Tarefa {
         return disciplina;
     }
 
-    public void setDisciplina(Disciplina disciplina) {
+    public void setDisciplina(String disciplina) {
         this.disciplina = disciplina;
     }
 

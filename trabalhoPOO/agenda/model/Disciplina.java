@@ -4,14 +4,15 @@ public class Disciplina {
 
     private int id;
     private String nome;
+    private String professor;
 
     public Disciplina() {
         this.id = id;
         this.nome = nome;
+        this.professor = professor;
     }
 
     public int getId() {
-        Log.i("MainActivity", "pegou o id");
         return id;
     }
 
@@ -20,12 +21,20 @@ public class Disciplina {
     }
 
     public String getNome() {
-        Log.i("MainActivity", "pegou o nome");
+
         return nome;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(String professor) {
+        this.professor = professor;
     }
 
 }

@@ -1,8 +1,5 @@
 {
-    "java.project.sourcePaths": [
-        "src"
-    ],
-    "java.project.referencedLibraries": [
-        "C:\\Users\\celli\\agenda-POO\\trabalhoPOO\\lib\\mariadb-java-client-3.5.1.jar"
-    ]
+    "java.project.sourcePaths": [],
+    "java.project.referencedLibraries": [],
+    "java.format.settings.url": ".vscode/java-formatter.xml"
 }
